@@ -96,7 +96,7 @@ JNIEXPORT jobject JNICALL Java_org_lwjgl_opengl_WindowsContextImplementation_nCr
 	wglMakeCurrent(saved_current_hdc, saved_current_hglrc);
 
 	//
-	if ( extensions.WGL_ARB_create_context ) { // We support WGL_ARB_create_context, use the new context creation routine
+	/*if ( extensions.WGL_ARB_create_context ) { // We support WGL_ARB_create_context, use the new context creation routine
 		// If we have no context to share and no special attributes, we don't have to recreate the context - wglCreateContext is equivalent to wglCreateContextAttribs(hdc,0,NULL).
 		if ( shared_context != NULL || attribList != NULL ) {
 			// Delete the oldschool context
@@ -108,13 +108,13 @@ JNIEXPORT jobject JNICALL Java_org_lwjgl_opengl_WindowsContextImplementation_nCr
 				return NULL;
 			}
 		}
-	} else { // We don't support WGL_ARB_create_context, use the old context creation routine
+	} else {*/ // We don't support WGL_ARB_create_context, use the old context creation routine
 		if (shared_context != NULL && !wglShareLists(shared_context, context)) { // Use wglShareLists to share context data
 			wglDeleteContext(context);
 			throwException(env, "Could not share contexts");
 			return NULL;
 		}
-	}
+	//}
 
 	context_info = (WindowsContext *)(*env)->GetDirectBufferAddress(env, context_handle);
 	context_info->context = context;
